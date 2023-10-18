@@ -1,0 +1,35 @@
+# compiled output
+/task-1/dist
+/task-1/node_modules
+
+# Logs
+/task-1/logs
+/task-1/*.log
+/task-1/npm-debug.log*
+/task-1/pnpm-debug.log*
+/task-1/yarn-debug.log*
+/task-1/yarn-error.log*
+/task-1/lerna-debug.log*
+
+# OS
+/task-1/.DS_Store
+
+# Tests
+/task-1/coverage
+/task-1/.nyc_output
+
+# IDEs and editors
+/task-1/.idea
+/task-1/.project
+/task-1/.classpath
+/task-1/.c9/
+/task-1/*.launch
+/task-1/.settings/
+/task-1/*.sublime-workspace
+
+# IDE - VSCode
+/task-1/.vscode/*
+!/task-1/.vscode/settings.json
+!/task-1/.vscode/tasks.json
+!/task-1/.vscode/launch.json
+!/task-1/.vscode/extensions.json
