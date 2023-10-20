@@ -19,6 +19,7 @@ model Syndicate {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   investors    Investor[]
+  pools        Pool[]
   transactions Transaction[]
 }
 
@@ -28,6 +29,17 @@ model Investor {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   syndicates   Syndicate[]
+  pools        Pool[]
+  transactions Transaction[]
+}
+
+model Pool {
+  id           String        @id @default(uuid())
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  syndicates   Syndicate[]
+  investors    Investor[]
   transactions Transaction[]
 }
 
@@ -42,6 +54,8 @@ model Transaction {
   investor     Investor   @relation(fields: [investorId], references: [id])
   syndicateId  String?
   syndicate    Syndicate? @relation(fields: [syndicateId], references: [id])
+  poolId       String
+  pool         Pool       @relation(fields: [poolId], references: [id])
   amountCents  BigInt     @default(0)
   transactedAt DateTime   @default(now())
   createdAt    DateTime   @default(now())
