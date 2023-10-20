@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Since a Syndicate may contain one or many Investor(s) and an Investor may be
+// a member of one or many Syndicate(s), a many-to-many relationship is needer
+// between Syndicate and Investor models.
+model Syndicate {
+  id           String        @id @default(uuid())
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  investors    Investor[]
+  transactions Transaction[]
+}
+
+model Investor {
+  id           String        @id @default(uuid())
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  syndicates   Syndicate[]
+  transactions Transaction[]
+}
+
+// The syndicateId column is kept optional considering the case where an Investor
+// is not part of any Syndicate.
+// The amountCents column is defined in cents which is assumed as the lowest currency unit. This is
+// an industry standard to store currency values as Integers for precise calcaulation. It's also
+// defined as BigInt to hold larger amounts.
+model Transaction {
+  id           String     @id @default(uuid())
+  investorId   String
+  investor     Investor   @relation(fields: [investorId], references: [id])
+  syndicateId  String?
+  syndicate    Syndicate? @relation(fields: [syndicateId], references: [id])
+  amountCents  BigInt     @default(0)
+  transactedAt DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([investorId])
+  @@index([syndicateId])
+  @@index([transactedAt(sort: Desc)])
+}

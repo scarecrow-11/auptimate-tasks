@@ -1,3 +1,6 @@
+# environment
+/task-1/.env
+
 # compiled output
 /task-1/dist
 /task-1/node_modules
